@@ -1,4 +1,4 @@
-## finance_ds_projects
+## 📖 About
 
 A collection of Financial Data Science projects exploring quantitative analysis, machine learning, simulation, and data engineering techniques applied to financial markets.
 
@@ -18,6 +18,11 @@ This repo includes a variety of financial data science projects, such as:
 
 - Exploratory Data Analysis (EDA) for equities and crypto
 
+## 🏁 Getting Started
+
+- CD into any project folder ie ("finace_ds_projects/monte_carlo")
+- Run main.py
+- Each project folder has their own README.md show casing the project at a deep level
 
 ## 🛠 Tech Stack
 
