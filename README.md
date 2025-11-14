@@ -2,7 +2,7 @@
 
 A collection of Financial Data Science projects exploring quantitative analysis, machine learning, simulation, and data engineering techniques applied to financial markets.
 
-This repository serves as a growing portfolio of finance-focused analytics projects, showcasing skills across Python, statistics, probability, time-series analysis, and end-to-end data workflows.
+This repository serves as a growing portfolio of finance-focused analytics projects, showcasing skills across Python, statistics, probability, and time-series analysis.
 
 ---
 
