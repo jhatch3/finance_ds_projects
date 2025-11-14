@@ -37,7 +37,7 @@ Each project lives in its own subfolder with dedicated code, notebooks, and docu
 - APIs: yfinance
 
 ## ⏱️ TODO
-- Emplement all projects under Overview
+Emplement all projects under Overview
 - [ ] **Stock Price Modeling** (GBM, Monte Carlo simulations, log-returns)
 - [ ] **Portfolio Optimization**
 - [ ] **Risk Analytics** (VaR, CVaR, volatility modeling)
