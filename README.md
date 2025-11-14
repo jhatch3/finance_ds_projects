@@ -24,13 +24,12 @@ Each project lives in its own subfolder with dedicated code, notebooks, and docu
 
 - CD into any project folder ie ("finace_ds_projects/monte_carlo")
 - Run main.py
-- Each project folder has their own README.md show casing the project at a deep level
 
 ## 🛠 Tech Stack
 
-- Python (NumPy, Pandas, SciPy, Scikit-Learn)
+- Python (NumPy, Pandas)
 
-- Matplotlib / Seaborn / Plotly
+- Matplotlib / Seaborn 
 
 - Jupyter Notebooks
 
