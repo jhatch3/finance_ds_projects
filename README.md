@@ -38,3 +38,7 @@ Each project lives in its own subfolder with dedicated code, notebooks, and docu
 
 ## ⏱️ TODO
 - Emplement all projects under Overview
+- [ ] **Stock Price Modeling** (GBM, Monte Carlo simulations, log-returns)
+- [ ] **Portfolio Optimization**
+- [ ] **Risk Analytics** (VaR, CVaR, volatility modeling)
+- [ ] **Exploratory Data Analysis (EDA)** for equities and crypto
