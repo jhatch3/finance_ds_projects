@@ -1,15 +1,13 @@
 import streamlit as st
-import matplotlib.pyplot as plt 
 import plotly.express as px
 import yfinance as yf
 import altair as alt
 import numpy as np 
 
-import streamlit as st
-import matplotlib.pyplot as plt 
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 import plotly.express as px
-import yfinance as yf
-import altair as alt
+
 import pandas as pd
 
 def split_df(df, x: int):
@@ -55,10 +53,10 @@ from main import get_df, run_sim, calc_anualized_mu, calc_anualized_sigma
 
 #ticker = "AAPL"
 #period = "1y"
+''
 
-st.title("Monte Carlo Simulation")
 ticker = st.text_input("Enter a Ticker: ")
-
+st.title("Monte Carlo Simulation")
 SIM_DAYS = int(st.number_input("Ammount of Days to Simulations: "))
 NUM_SIMS = int(st.number_input("Ammount of Simulations to Run: "))
 
@@ -142,8 +140,82 @@ if ticker and NUM_SIMS:
     st.dataframe(sim_df)
 
     # Raw Data Section
-    st.header("Raw Data Preview")
+    st.title(f"{ticker} Historical Analysis")
 
     
-    st.dataframe(train_data)
+    train_data = train_data.dropna()
+    fig3 = px.line(
+        train_data,
+        x=train_data.index,
+        y=train_data["logReturns"],  # all columns except Date
+        title=f"{ticker} - Log Returns Over Time"
+    )
 
+    fig3.update_layout(
+        xaxis_title = "Date",
+        yaxis_title = "Log Return ($)"
+    )
+
+    st.plotly_chart(fig3, use_container_width=True)
+
+    log_winners = round((train_data["logReturns"] > 0).mean(),2) * 100
+    log_losers = round((train_data["logReturns"] < 0).mean(),2) * 100
+    
+    st.markdown(f"""
+        - There Were Positive Log Returns {log_winners}% Of The Time
+        - There Were Negative Log Returns {log_losers}% Of The Time.
+    """)
+    
+    fig4 = make_subplots(specs=[[{"secondary_y": True}]])
+
+    # Left Y-axis (prices)
+    fig4.add_trace(
+        go.Line(
+            x=train_data.index,
+            y=train_data["Open"],
+            name="Open Price"
+        ),
+        secondary_y=False
+    )
+
+    fig4.add_trace(
+        go.Line(
+            x=train_data.index,
+            y=train_data["Close"],
+            name="Close Price"
+        ),
+        secondary_y=False
+    )
+
+    # Right Y-axis (volume)
+    fig4.add_trace(
+        go.Bar(
+            x=train_data.index,
+            y=train_data["Volume"],
+            name="Volume",
+            opacity=0.4
+        ),
+        secondary_y=True
+    )
+
+    # Titles + axes labels
+    fig4.update_layout(
+        title=f"{ticker} - Open, Close, and Volume",
+        xaxis_title="Date",
+    )
+
+    fig4.update_yaxes(
+        title_text="Price ($)",
+        secondary_y=False
+    )
+
+    fig4.update_yaxes(
+        title_text="Volume",
+        secondary_y=True
+    )
+
+    # Display
+    st.plotly_chart(fig4, use_container_width=True)
+
+
+    st.dataframe(train_data)
