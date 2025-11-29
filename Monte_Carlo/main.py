@@ -8,26 +8,6 @@ from datetime import datetime, timedelta
 BACK_TEST = True
 BACK_TEST_DAYS = 30
 
-def compute_log_returns(df):
-
-    # Ensure datetime index
-    if not isinstance(df.index, pd.DatetimeIndex):
-        df = df.reset_index().set_index("Date")
-
-    prices = df["Close"].astype(float)
-
-    # Filter out non-positive prices to avoid log(<=0)
-    prices = prices[prices > 0]
-
-    log_returns = np.log(prices / prices.shift(1))
-    log_returns = log_returns.dropna()
-
-    # Make sure it's a Series
-    if isinstance(log_returns, pd.DataFrame):
-        log_returns = log_returns.iloc[:, 0]
-
-    return pd.DataFrame({"logReturns": log_returns})
-
 def get_df(ticker:str, period:str= "max"):
     # Download data and return as pd "Date, Returns"
 
@@ -47,18 +27,7 @@ def get_df(ticker:str, period:str= "max"):
         print(f"Error Downloading Data: {e}")
         return pd.DataFrame()
 
-def split_df(df, x:int = BACK_TEST_DAYS):
-    # Ensure datetime index
-    if not isinstance(df.index, pd.DatetimeIndex):
-        df = df.reset_index().set_index("Date")
 
-    split_date = datetime.now() - timedelta(days=x)
-    split_date = split_date.strftime("%Y-%m-%d")
-
-    train = df.loc[:split_date]
-    test  = df.loc[split_date:]
-    
-    return train, test
 
 def calc_anualized_mu(df):
     mu_daily = df["logReturns"].mean()
@@ -68,11 +37,10 @@ def calc_anualized_sigma(df):
     sigma_daily = df["logReturns"].std()
     return sigma_daily * np.sqrt(252) 
 
-def run_sim(mu_annual, sigma_annual, last_price, df, number_of_sims=10, days=100):
+def run_sim(mu_annual, sigma_annual, df, number_of_sims=10, days=100):
     
-    # Find amount of trading days in sims days ie 30 days might only equal 20 trading days 
-    n_days = split_date = datetime.now() - timedelta(days=days) 
-    n_days  = len(df.loc[split_date:])
+    # Find day 0 price 
+    last_price = df.tail(days).iloc[0]["Close"]
 
     # Convert annual to daily
     mu_daily = mu_annual / 252.0
@@ -83,16 +51,16 @@ def run_sim(mu_annual, sigma_annual, last_price, df, number_of_sims=10, days=100
     data = {}
     for i in range(number_of_sims):
         prices = [last_price]
-        for _ in range(n_days):
+        for _ in range(days):
             eps = np.random.normal()
             next_price = prices[-1] * np.exp(
                 (mu_daily - 0.5 * sigma_daily**2) * dt
                 + sigma_daily * np.sqrt(dt) * eps
             )
             prices.append(round(next_price, 2))
-
+            print(round(next_price, 2))
         data[f"Sim_{i}"] = prices
-
+    
     sim_df = pd.DataFrame(data)
     return sim_df
 
