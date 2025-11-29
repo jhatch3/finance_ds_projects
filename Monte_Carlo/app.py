@@ -3,7 +3,6 @@ import plotly.express as px
 import yfinance as yf
 import altair as alt
 import numpy as np 
-
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
