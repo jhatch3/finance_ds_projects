@@ -10,9 +10,10 @@ This repository serves as a growing portfolio of finance-focused analytics proje
 
 This repo includes a variety of financial data science projects, such as:
 
-- **Stock Price Modeling** (GBM, Monte Carlo simulations, log-returns)
-- **Portfolio Optimization**
-- **Risk Analytics** (VaR, CVaR, volatility modeling)
+- IN PROGRESS: **Stock Price Modeling** (GBM, Monte Carlo simulations, log-returns)
+- IN PROGRESS: **Backtested SMA Crossover vs. Buy-and-Hold** Assessed Return Differences via Hypothesis Testing (Python, Pandas)
+- TODO: **Portfolio Optimization** 
+- TODO: **Risk Analytics** (VaR, CVaR, volatility modeling)
   
 Each project lives in its own subfolder with dedicated code, notebooks, and documentation.
 
@@ -35,8 +36,6 @@ Each project lives in its own subfolder with dedicated code, notebooks, and docu
 - APIs: yfinance
 
 ## ⏱️ TODO
-Emplement all projects under Overview
-- [ ] **Stock Price Modeling** (GBM, Monte Carlo simulations, log-returns)
-- [ ] **Portfolio Optimization**
-- [ ] **Risk Analytics** (VaR, CVaR, volatility modeling)
-- [ ] **Exploratory Data Analysis (EDA)** for equities and crypto
+Implement all projects under Overview
+- [ ] **Stock Price Modeling** Fix Code, ie refactor 
+- [ ] **Portfolio Optimization** ** finish implementations 
