@@ -1,0 +1,22 @@
+tickers = [
+    "AAPL","MSFT","AMZN","GOOGL","GOOG","META","NVDA","TSLA","BRK-B","JPM",
+    "JNJ","V","XOM","PG","UNH","HD","MA","CVX","ABBV","KO",
+    "LLY","PEP","AVGO","MRK","COST","BAC","WMT","ADBE","CRM","CSCO",
+    "ACN","MCD","TMO","ABT","DHR","LIN","WFC","CMCSA","PFE","DIS",
+    "VZ","NFLX","NKE","ORCL","TXN","QCOM","AMD","PM","HON","IBM",
+    "AMGN","SBUX","DE","GS","MS","SPGI","BLK","AXP","C","NOW",
+    "INTU","ISRG","MDLZ","BKNG","GILD","ADP","LMT","LOW","CI","CVS",
+    "MO","SCHW","CB","MMM","FDX","PLD","SYK","DUK","SO","NEE",
+    "COP","SLB","T","RTX","USB","PNC","TGT","BDX","ADI","VRTX",
+    "REGN","ELV","CSX","NSC","MMC","ICE","CME","MU","AMAT","KLAC",
+    "LRCX","SNPS","CDNS","PANW","CRWD","ETN","EMR","AON","MET","AIG",
+    "PRU","ALL","TRV","PGR","HIG","STT","BK","NEM","FCX","NOC",
+    "GD","PH","ITW","ROP","APD","ECL","SHW","MAR","HLT","RCL",
+    "DAL","UNP","KMB","CL","WM","RSG","CTAS","PAYX","FIS","FI",
+    "PYPL","COF","HPQ","DELL","EA","TTWO","ROST","TJX",
+    "DG","DLTR","KR","KHC","GIS","K","SJM","HSY","MNST","KDP",
+    "YUM","CMG","F","GM","ADSK","INTC","LULU","CARR","NXPI",
+    "MRVL","ANET","FTNT","WDAY","TEAM","ZM","DOCU","SNOW","DDOG","SHOP",
+    "TWLO","OKTA","NET","MDB","TTD","SPOT","UBER","ABNB","AFL","AEP",
+    "EXC","XEL","PEG","ED","EIX","D","OKE","KMI","PSX","MPC","VLO"
+]
