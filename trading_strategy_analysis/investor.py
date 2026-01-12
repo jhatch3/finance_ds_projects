@@ -50,6 +50,7 @@ class Investor:
         self.position_open = False
         self.trades = []
         self.cagr = 0
+        self.len = 0
         self.start_ammount = float(cash) 
 
     def buy(self, date: str, price: float, shares: float):
@@ -115,6 +116,7 @@ class Investor:
         
         
         start, end = sample_start_end_idx(n_rows=len(self.data))
+        self.len = end - start 
 
         df = self.data.iloc[start:end].copy()
         
@@ -144,7 +146,7 @@ class Investor:
             cooldown_days = 1
 
             start, end = sample_start_end_idx(n_rows=len(self.data))
-
+            self.len = end - start 
             df = self.data.iloc[start:end].copy()
 
 

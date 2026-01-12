@@ -96,7 +96,7 @@ def populate_data(ticker:str, interval: str="1d", period="max"):
     return data 
 
 
-def sample_start_end_idx(n_rows: int, min_window: int = 1, rng=np.random.default_rng()):
+def sample_start_end_idx(n_rows: int, min_window: int = 200, rng=np.random.default_rng()):
     """
     Returns (start_idx, end_idx) such that:
     - 0 <= start_idx < end_idx < n_rows
