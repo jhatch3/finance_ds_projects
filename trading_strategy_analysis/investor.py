@@ -40,6 +40,9 @@ trade = {
 
 """
 
+SMA_INDX = 0
+BH_INDX = 0
+
 class Investor:
     def __init__(self, strategy, data,  ticker, cash=10_000):
         self.ticker = ticker
@@ -51,7 +54,7 @@ class Investor:
         self.trades = []
         self.cagr = 0
         self.len = 0
-        self.start_ammount = float(cash) 
+        self.start_ammount = float(cash)
 
     def buy(self, date: str, price: float, shares: float):
         if self.position_open:          # can't buy twice
@@ -110,7 +113,8 @@ class Investor:
         else:
             return 0 
     
-    def run_bh_sim(self) -> float:
+    def run_bh_sim(self, title) -> float:
+        fig, ax = plt.subplots()
         
         stock = self.ticker
         
@@ -120,27 +124,42 @@ class Investor:
 
         df = self.data.iloc[start:end].copy()
         
+        ax.plot(df.index, df["Open"], label="Open", color="black", alpha=0.5)
+        ax.plot(df.index, df["SMA_OPEN_50"], label="SMA_50_OPEN", color="r")
+        ax.plot(df.index, df["SMA_OPEN_255"], label="SMA_OPEN_255", color="b")
+
         date = df.index[0]
         self.place_order("buy",  date, price=df.loc[date]["Open"][stock], shares= (self.cash // df.loc[date]["Open"][stock] - 1))
+        plot_buy_sell(ax, df, "buy", date)
 
         date = df.index[-1]
         self.place_order("sell",  date, price=df.loc[date]["Open"][stock])
-
-
-
+        plot_buy_sell(ax, df, "sell", date)
+        
         if self.position_open:
             print(f"Closing")
             self.place_order("sell",  df.index[-1], price=df.loc[df.index[-1]]["Open"][stock])
-
+            plot_buy_sell(ax, df, "sell", date)
 
     
         days = (df.index[-1] - df.index[0]).days  
         cagr = calc_cagr(days=days, start_balance=self.start_ammount, end_balance=self.cash) 
+        
+        ax.set_title(f"Bh | {stock} stock \n Starting Bank Roll: {self.start_ammount:,.2f} | Final Bank Roll: {round(self.cash,2):,.2f} | Compounded Annualized Growth Rate: {cagr:,.2f}%")
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Open Price ($)")
+
+        fig.set_size_inches([15,5])
+        fig.legend(loc="upper left")
+        
+        fig.savefig(f"bh_plots/{title}")
         self.cagr = cagr 
         return cagr 
 
-    def run_sma_sim(self) -> float:
+    def run_sma_sim(self, title) -> float:
             
+            fig, ax = plt.subplots()
+
             stock = self.ticker
 
             cooldown_days = 1
@@ -162,6 +181,11 @@ class Investor:
 
             last_plotted_date = None
 
+            ax.plot(df.index, df["Open"], label="Open", color="black", alpha=0.5)
+            ax.plot(df.index, df["SMA_OPEN_50"], label="SMA_50_OPEN", color="r")
+            ax.plot(df.index, df["SMA_OPEN_255"], label="SMA_OPEN_255", color="b")
+
+
             for date in cross_dates:
                 if last_plotted_date is None or (date - last_plotted_date).days >= cooldown_days:
                     # Determine direction of cross:
@@ -171,31 +195,45 @@ class Investor:
 
                     if prev_spread < 0 and curr_spread > 0:
                         if  self.place_order("buy",  date, price=df.loc[date]["Open"][stock], shares= (self.cash // df.loc[date]["Open"][stock] - 1)):
+                            plot_buy_sell(ax, df, "buy", date)
                             last_plotted_date = date
 
                     elif prev_spread > 0 and curr_spread < 0:
                         if self.place_order("sell",  date, price=df.loc[date]["Open"][stock]):
+                            plot_buy_sell(ax, df, "sell", date)
                             last_plotted_date = date
 
             if self.position_open:
                 self.place_order("sell",  df.index[-1], price=df.loc[df.index[-1]]["Open"][stock])
+                plot_buy_sell(ax, df, "sell", df.index[-1])
             
             days = (df.index[-1] - df.index[0]).days 
             cagr = calc_cagr(days=days, start_balance=self.start_ammount, end_balance=self.cash)
+            
+            ax.set_title(f"SMA | {stock} stock \n Starting Bank Roll: {self.start_ammount:,.2f} | Final Bank Roll: {round(self.cash,2):,.2f} | Compounded Annualized Growth Rate: {cagr:,.2f}%")
+            ax.set_xlabel("Date")
+            ax.set_ylabel("Open Price ($)")
+
+            fig.set_size_inches([15,5])
+            fig.legend(loc="upper left")
+            
+            fig.savefig(f"sma_plots/{title}")
+            
+            
             self.cagr = cagr 
             return cagr
     
 
-    def run_sim(self):
+    def run_sim(self, EPOCH):
         """
         :param stock:
         """
         
         if self.strategy == "Buy & Hold":
-            self.run_bh_sim() 
+            self.run_bh_sim(EPOCH) 
 
         elif self.strategy == "SMA": 
-            self.run_sma_sim()
+            self.run_sma_sim(EPOCH)
 
         else:
             raise ValueError("Enter 'Buy & Hold' or 'SMA' for trading strategy")
@@ -208,7 +246,7 @@ if __name__ == "__main__":
     TICKER = "AAPL"
     DATA = populate_data(TICKER)
 
-    inv = Investor(BH, cash=CASH, ticker=TICKER, data=DATA)
+    inv = Investor(SMA, cash=CASH, ticker=TICKER, data=DATA)
 
     inv.run_sim() 
             

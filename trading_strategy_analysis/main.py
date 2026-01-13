@@ -40,7 +40,7 @@ if __name__ == "__main__":
         DATA_SMA = populate_data(TICKER_SMA)
 
         inv_sma = Investor(SMA, cash=CASH, ticker=TICKER_SMA, data=DATA_SMA)
-        inv_sma.run_sim() 
+        inv_sma.run_sim(i) 
 
         sma_num_trades.append(len(inv_sma.trades))
         sma_cagrs.append(inv_sma.cagr)
@@ -51,11 +51,12 @@ if __name__ == "__main__":
         DATA_BH = populate_data(TICKER_BH)
 
         inv_bh = Investor(BH, cash=CASH, ticker=TICKER_BH, data=DATA_BH)
-        inv_bh.run_sim()
+        inv_bh.run_sim(i)
 
         bh_num_trades.append(len(inv_bh.trades))
         bh_cagrs.append(inv_bh.cagr)
         bh_len.append(inv_bh.len)
+
         clear_screen()
         
 
