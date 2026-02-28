@@ -10,32 +10,5 @@ This repository serves as a growing portfolio of finance-focused analytics proje
 
 This repo includes a variety of financial data science projects, such as:
 
-- IN PROGRESS: **Stock Price Modeling** (GBM, Monte Carlo simulations, log-returns)
-- IN PROGRESS: **Backtested SMA Crossover vs. Buy-and-Hold** Assessed Return Differences via Hypothesis Testing (Python, Pandas)
-- TODO: **Portfolio Optimization** 
-- TODO: **Risk Analytics** (VaR, CVaR, volatility modeling)
-  
-Each project lives in its own subfolder with dedicated code, notebooks, and documentation.
-
----
-
-
-## 🏁 Getting Started
-
-- CD into any project folder ie ("finace_ds_projects/monte_carlo")
-- Run main.py
-
-## 🛠 Tech Stack
-
-- Python (NumPy, Pandas)
-
-- Matplotlib / Seaborn 
-
-- Jupyter Notebooks
-
-- APIs: yfinance
-
-## ⏱️ TODO
-Implement all projects under Overview
-- [ ] **Stock Price Modeling** Fix Code, ie refactor 
-- [ ] **Portfolio Optimization** ** finish implementations 
+- SMA vs Buy-and-Hold Trading framework and Hypothesis testing
+- Monte Carlo Sim to predict stock prices using GBM
